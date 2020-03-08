@@ -1,23 +1,28 @@
 package edu.utdallas.taskExecutorImpl;
 
-import java.util.List;
+import java.util.ArrayList;
 
+import edu.utdallas.blockingFIFO.BlockingFIFO;
 import edu.utdallas.taskExecutor.Task;
 import edu.utdallas.taskExecutor.TaskExecutor;
+import edu.utdallas.taskRunner.TaskRunner;
 
 public class TaskExecutorImpl implements TaskExecutor
 {
-
-	TaskExecutorImpl(int num){
-		List runnnerPool = new List<TaskRunner>(num);
-		BlockingQueue fifo = new BlockingQueue(num*10);
-	}
-
+	BlockingFIFO fifo = new BlockingFIFO();
+	
+	
+	
 	@Override
 	public void addTask(Task task)
 	{
 		// TODO Complete the implementation
-		fifo.put(task);
+		try {
+			fifo.put(task);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
