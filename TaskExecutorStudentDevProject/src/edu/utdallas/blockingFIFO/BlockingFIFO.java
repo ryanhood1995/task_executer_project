@@ -21,40 +21,45 @@ public class BlockingFIFO {
 	
 	public void put(Task task) throws InterruptedException {
 		while (true) {
-			System.out.print("HI -- put");
-			if (count == 100) {
+			if (count == buffer.length) {
 				notFull.wait();
-				continue;
 			}
-			else {
-				break;
+			
+			synchronized(this) {
+				if (count == buffer.length) {
+					continue;
+				}
+				else {
+					buffer[nextIn] = task;
+					nextIn = (nextIn + 1) % buffer.length;
+					count++;
+					notEmpty.notify();
+					break;
+				}
 			}
-		}
-		synchronized(this) {
-			buffer[nextIn] = task;
-			nextIn = (nextIn + 1) % 100;
-			count++;
-			notEmpty.notify();
+			
+			
 		}
 	}
 	
 	public Task take() throws InterruptedException {
 		while (true) {
 			if (count == 0) {
-				System.out.print("HI -- take");
 				notEmpty.wait();
-				continue;
 			}
-			else {
-				break;
-			}
-		}
-		synchronized(this) {
-			Task result = buffer[nextOut];
-			nextOut = (nextOut + 1) % 100;
-			count--;
-			notFull.notify();
-			return result;
+			
+			synchronized(this) {
+				if (count == 0) {
+					continue;
+				}
+				else {
+					Task result = buffer[nextOut];
+					nextOut = (nextOut + 1) % buffer.length;
+					count--;
+					notFull.notify();
+					return result;
+				}
+			}	
 		}
 	}
 }
