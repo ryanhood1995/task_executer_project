@@ -25,9 +25,9 @@ public class TaskExecutorImpl implements TaskExecutor
 		//this.fifo = new ArrayBlockingQueue<Task>(100);
 		this.threadArray = new TaskRunner[arrayLength];
 		
-		for (int j = 0 ; j < 1000 ; j++) {
-			System.out.println("FDFFDFFDF");
-		}
+//		for (int j = 0 ; j < 1000 ; j++) {
+//			System.out.println("FDFFDFFDF");
+//		}
 		
 		
 		// Now that all items have been initialized, we need to fill the array with task runners.
@@ -49,7 +49,7 @@ public class TaskExecutorImpl implements TaskExecutor
 	public void addTask(Task task)
 	{
 		try {
-			System.out.println("HEEEEEELLLLO");
+//			System.out.println("HEEEEEELLLLO");
 			fifo.put(task);
 		} 
 		catch (InterruptedException e) {

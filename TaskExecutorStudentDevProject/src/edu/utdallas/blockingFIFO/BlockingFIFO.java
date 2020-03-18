@@ -21,11 +21,13 @@ public class BlockingFIFO {
 	
 	public void put(Task task) throws InterruptedException {
 		while (true) {
-			if (count == buffer.length) {
-				notFull.wait();
+
+			synchronized(notFull) {
+				if (count == buffer.length) {
+					notFull.wait();
+				}
 			}
-			
-			synchronized(this) {
+			synchronized(notEmpty) {
 				if (count == buffer.length) {
 					continue;
 				}
@@ -44,11 +46,13 @@ public class BlockingFIFO {
 	
 	public Task take() throws InterruptedException {
 		while (true) {
-			if (count == 0) {
-				notEmpty.wait();
+
+			synchronized(notEmpty) {
+				if (count == 0) {
+					notEmpty.wait();
+				}
 			}
-			
-			synchronized(this) {
+			synchronized(notFull) {
 				if (count == 0) {
 					continue;
 				}
