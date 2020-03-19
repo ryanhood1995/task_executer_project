@@ -52,6 +52,7 @@ public class BlockingFIFO {
 					notEmpty.wait();
 				}
 			}
+			
 			synchronized(notFull) {
 				if (count == 0) {
 					continue;
