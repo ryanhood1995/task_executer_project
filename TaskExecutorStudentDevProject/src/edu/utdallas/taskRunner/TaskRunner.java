@@ -1,6 +1,5 @@
 package edu.utdallas.taskRunner;
 
-import java.util.concurrent.ArrayBlockingQueue;
 import edu.utdallas.blockingFIFO.BlockingFIFO;
 import edu.utdallas.taskExecutor.Task;
 
@@ -8,7 +7,6 @@ import edu.utdallas.taskExecutor.Task;
 public class TaskRunner implements Runnable {
 	// Since the threads need access to the fifo (to take tasks), we must include it as an instance variable of class.
 	private BlockingFIFO fifo;
-	//private ArrayBlockingQueue<Task> fifo;
 	
 	// The constructor simply initializes the fifo.
 	public TaskRunner(BlockingFIFO fifo) {

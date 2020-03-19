@@ -4,7 +4,6 @@ import edu.utdallas.blockingFIFO.BlockingFIFO;
 import edu.utdallas.taskExecutor.Task;
 import edu.utdallas.taskExecutor.TaskExecutor;
 import edu.utdallas.taskRunner.TaskRunner;
-import java.util.concurrent.ArrayBlockingQueue;
 
 public class TaskExecutorImpl implements TaskExecutor
 {
@@ -14,7 +13,6 @@ public class TaskExecutorImpl implements TaskExecutor
 	// -- A size (of the array of TaskRunners.
 	
 	private BlockingFIFO fifo;
-	//private ArrayBlockingQueue<Task> fifo;
 	private TaskRunner threadArray[];
 	private int arrayLength;
 	
@@ -22,13 +20,7 @@ public class TaskExecutorImpl implements TaskExecutor
 	public TaskExecutorImpl(int length) {
 		this.arrayLength = length;
 		this.fifo = new BlockingFIFO();
-		//this.fifo = new ArrayBlockingQueue<Task>(100);
 		this.threadArray = new TaskRunner[arrayLength];
-		
-//		for (int j = 0 ; j < 1000 ; j++) {
-//			System.out.println("FDFFDFFDF");
-//		}
-		
 		
 		// Now that all items have been initialized, we need to fill the array with task runners.
 		for (int i = 0 ; i < arrayLength ; i++) {
@@ -49,7 +41,6 @@ public class TaskExecutorImpl implements TaskExecutor
 	public void addTask(Task task)
 	{
 		try {
-//			System.out.println("HEEEEEELLLLO");
 			fifo.put(task);
 		} 
 		catch (InterruptedException e) {
