@@ -24,7 +24,6 @@ public class BlockingFIFO {
 			if (count == buffer.length) {
 				notFull.wait();
 			}
-			
 			synchronized(this) {
 				if (count == buffer.length) {
 					continue;
@@ -46,8 +45,7 @@ public class BlockingFIFO {
 		while (true) {
 			if (count == 0) {
 				notEmpty.wait();
-			}
-			
+			}	
 			synchronized(this) {
 				if (count == 0) {
 					continue;
